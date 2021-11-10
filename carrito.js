@@ -74,8 +74,28 @@ function mostrarProductosCarrito(producto){
                       
 }
 
+//Muestra y desaparece carrito de compras
+
+$("#botonToggle").click (function(){
+
+  $("#carrito").toggle();
 
 
+})
+$("#botongToggle").on("click" ,function(e){
+
+  if(e.target.innerHTML != "Mostrar carrito"){
+
+    e.target.innerHTML = "Mostrar carrito"; 
+
+  }
+
+  else{
+
+    e.target.innerHTML = "Esconder carrito";
+
+  }
+})
 
 
 

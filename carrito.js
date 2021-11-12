@@ -82,7 +82,7 @@ $("#botonToggle").click (function(){
 
 
 })
-$("#botongToggle").on("click" ,function(e){
+$("#botonToggle").on("click" ,function(e){
 
   if(e.target.innerHTML != "Mostrar carrito"){
 

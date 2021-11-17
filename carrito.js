@@ -74,28 +74,38 @@ function mostrarProductosCarrito(producto){
                       
 }
 
+//Texto animado
+$("#desafioCoder")
+            .html("Esto es para el desafio complementario")
+                .css("color", "blue")
+                    .fadeOut(4000)
+                        .fadeIn(3000); 
+
+
 //Muestra y desaparece carrito de compras
+  $("#botonToggle").click(function(){
 
-$("#botonToggle").click (function(){
+    $("#carrito").fadeToggle("slow");
 
-  $("#carrito").toggle();
+  })
+  
+  $("#botonToggle").on("click" ,function(e){
+  
+    if(e.target.innerHTML != "Mostrar carrito"){
+  
+      e.target.innerHTML = "Mostrar carrito"; 
+  
+    }
+  
+    else{
+  
+      e.target.innerHTML = "Esconder carrito";
+  
+    }
+  })
+  
 
 
-})
-$("#botongToggle").on("click" ,function(e){
-
-  if(e.target.innerHTML != "Mostrar carrito"){
-
-    e.target.innerHTML = "Mostrar carrito"; 
-
-  }
-
-  else{
-
-    e.target.innerHTML = "Esconder carrito";
-
-  }
-})
 
 
 

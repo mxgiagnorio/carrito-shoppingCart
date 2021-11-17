@@ -75,6 +75,7 @@ function mostrarProductosCarrito(producto){
 }
 
 //Texto animado
+
 $("#desafioCoder")
             .html("Esto es para el desafio complementario")
                 .css("color", "blue")

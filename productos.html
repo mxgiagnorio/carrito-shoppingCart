@@ -66,8 +66,8 @@
       <div
         class="btn-group-vertical mt-5"
         role="group"
-        aria-label="Button group with nested dropdown"
-      ></div>
+        aria-label="Button group with nested dropdown">
+      </div>
       <div>
         <button type="button" class="btn btn-secondary mr-1 mt-5">
           <a id="botonToggle">Esconder carrito</a>
@@ -102,6 +102,28 @@
           </thead>
           <tbody id="tbody"></tbody>
         </table>
+        <button class="btn btn-success ml-auto confirmarCompra" type="button" data-toggle="modal"
+        data-target="#comprarModal">Comprar</button>
+         <!-- START MODAL COMPRA -->
+         <div class="modal fade" id="comprarModal" tabindex="-1" aria-labelledby="comprarModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="comprarModalLabel">Gracias por confiar en nosotros!</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <p>Pronto recibirá su compra</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                 </div>
+             </div>
+         </div>
+     </div>
       </div>
       <div id="listaDeProductos">
         <!-- - - - - audio - - - - - -!-->
@@ -141,14 +163,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Auriculares celestes</h5>
                   <p class="card-text typeM bold">$6500</p>
-                  <button
-                    type="button"
-                    class="btn btn-dark botonComprar"
-                    data-toggle="modal"
-                    data-target="#btncomprar"
-                  >
-                    Agregar al carrito
-                  </button>
+                  <button type="button" class="btn btn-dark botonComprar" data-toggle="modal" data-target="#btncomprar" >Agregar al carrito</button>
                 </div>
               </div>
             </div>

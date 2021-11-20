@@ -22,6 +22,10 @@ class Producto {
     }
   }
 
+  
+const confirmarCompra = document.querySelector(".confirmarCompra");
+confirmarCompra.addEventListener ("click" , confirmarCompraOk)
+
 let botonCompra = document.querySelectorAll(".botonComprar"); 
 
 let carrito = [];  
@@ -65,13 +69,30 @@ function mostrarProductosCarrito(producto){
     fila.innerHTML = `<td>${producto.nombre}</td>
                       <td>${producto.cantidad}</td>
                       <td>${producto.precio}</td>
-                      <td><button class ="btn btn-danger">Eliminar</button></td>
+                      <td><button class ="btn btn-danger botonEliminar">Eliminar</button></td>
                       `
 
  let tbody = document.getElementById("tbody"); 
 
   tbody.appendChild(fila); 
+
+  fila.querySelector(".botonEliminar").addEventListener("click" , eliminarProductoOk);
                       
+}
+
+
+function eliminarProductoOk(e){
+
+  const eliminarProductoElegido = e.target; 
+
+  eliminarProductoElegido.closest('tr').remove();
+
+}
+
+function confirmarCompraOk(){
+
+tbody.innerHTML = ``
+
 }
 
 //Texto animado

@@ -127,8 +127,64 @@ $("#desafioCoder")
   })
   
 
+//API DEL CLIMA 
+
+$("#botonClima").click(function(){
+
+  $("#apiClima").fadeToggle("slow");
+
+})
+
+$("#botonClima").on("click" ,function(e){
+  
+  if(e.target.innerHTML != "Mostrar clima"){
+
+    e.target.innerHTML = "Mostrar clima"; 
+
+  }
+
+  else{
+
+    e.target.innerHTML = "Esconder clima";
+
+  }
+})
 
 
+$.ajax({
+
+
+  url:'http://api.openweathermap.org/data/2.5/weather',
+  type:"GET",
+  data:{
+      q:'Tigre',
+      appid: '8d1c7e66144d584458f0befbc90792a2',
+      dataType:"jsonp",
+      units: 'metric'
+  },
+  success:function(data){
+
+      console.log( data);
+      let icono = data.weather[0].icon;
+      let iconoURL = "http://openweathermap.org/img/w/" + icono + ".png";
+      $("#icono").attr("src" , iconoURL);
+      let contenido = `<div>
+                          <p>${data.name}</p>                            
+                          <p>${data.weather[0].main}</p>
+                          <p>TEMP MAX: ${data.main.temp_max}</p>
+                          <p>TEMP MIN: ${data.main.temp_min}</p>
+
+                      </div>`;
+
+
+      $("#apiClima").append(contenido);
+
+
+
+  }
+
+
+})
 
 
 

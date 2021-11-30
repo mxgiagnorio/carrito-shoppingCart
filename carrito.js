@@ -137,7 +137,7 @@ $("#botonClima").click(function(){
 
 $("#botonClima").on("click" ,function(e){
   
-  if(e.target.innerHTML != "Mostrar clima"){
+	if(e.target.innerHTML != "Mostrar clima"){
 
     e.target.innerHTML = "Mostrar clima"; 
 

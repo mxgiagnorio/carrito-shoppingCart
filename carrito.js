@@ -1,198 +1,212 @@
+//Muestra y desaparece carrito de compras
+$("#botonToggle").click(function(){
 
-//Objetos
+  $("#carrito").fadeToggle("slow");
 
-class Producto {
+})
 
-    constructor(nombre, precio, id, img) {
-      this.nombre = nombre;
-      this.precio = precio;
-      this.id = id;
-      this.img = img;
-      this.stock = "En stock";
-    }
-    //Metodos
-    sinStock() {
-      this.stock = "Sin Stock";
-    }
-    descuento(porcentaje) {
-      this.precio = this.precio * porcentaje;
-    }
-    descuento10() {
-      this.precio = this.precio * 0.9;
-    }
+$("#botonToggle").on("click" ,function(e){
+
+  if(e.target.innerHTML != "Mostrar carrito"){
+
+    e.target.innerHTML = "Mostrar carrito"; 
   }
 
-  
-const confirmarCompra = document.querySelector(".confirmarCompra");
-confirmarCompra.addEventListener ("click" , confirmarCompraOk)
+  else{
 
-let botonCompra = document.querySelectorAll(".botonComprar"); 
+    e.target.innerHTML = "Esconder carrito";
+  }
+})
 
-let carrito = [];  
+//Capturo el evento click del boton comprar del producto
+const clickProducto = document.querySelectorAll(".botonComprar"); 
+const tbody = document.querySelector(".tbody")
 
-for(let boton of botonCompra){
-
-    boton.addEventListener("click", agregarCarrito); 
-
-}
+let carrito = []; 
 
 
-function agregarCarrito(e){
+for(const boton of clickProducto)
 
-    let botonAgregarProducto = e.target;
-    let cardProducto = botonAgregarProducto.parentNode.parentNode; 
+boton.addEventListener("click", (agregarProductoCarrito))
 
-    nombreProducto = cardProducto.querySelector("h5").textContent;
-    imagenProducto = cardProducto.querySelector("img").src;
-    precioProducto = cardProducto.querySelector("p").textContent;
+function agregarProductoCarrito(e){
 
-    const producto = {
+const botonAgregarProducto = e.target; 
+const cardProducto = botonAgregarProducto.parentNode.parentNode
+
+    nombreProducto = cardProducto.querySelector(".card-title").textContent; 
+    imagenProducto = cardProducto.querySelector(".card-img-top").src;
+    precioProducto = cardProducto.querySelector(".card-text").textContent;
+    
+    const productosCarrito = {
 
         nombre : nombreProducto,
         imagen : imagenProducto,
         precio : precioProducto, 
         cantidad : 1,  
+      
+}
+
+      mostrarProductosCarrito(productosCarrito);
+
+}
+  //Creo una funcion que recorre el carrito evitando repetir productos en el contenido
+  function mostrarProductosCarrito(productosCarrito){
+ 
+  const sumarProducto = tbody.getElementsByClassName("sumaProducto")
+ 
+  for(let i =0; i < carrito.length ; i++){ 
+    if(carrito[i].nombre.trim() === productosCarrito.nombre.trim()){
+
+    carrito[i].cantidad ++;
+    const valueSumarProducto = sumarProducto[i]
+    valueSumarProducto.value ++; 
+    totalCarrito()
+    
+    return null; 
+
+    }
+  
+  }
+  
+  carrito.push(productosCarrito);
+  
+  actualizarCarrito();
+
+}
+
+// Se crea el contenido del carrito 
+function actualizarCarrito(){
+
+  tbody.innerHTML = ""
+
+  carrito.map(cardProducto => {
+
+    const tr = document.createElement("tr")
+
+    tr.classList.add("agregaProductoCarrito")
+
+    const contenido =  
+    ` 
+                  <th scope="row">1</th>
+                  <td class="table__productos">
+                    <img src=${cardProducto.imagen} alt="">
+                    <h6 class="title ml-4">${cardProducto.nombre}</h6>              
+                  </td>
+                  <td class="table__precio"><p>${cardProducto.precio}</p></td>
+                  <td class="table__cantidad">
+                    <input type="number" min="1" value=${cardProducto.cantidad} class="sumaProducto">
+                    <button class="delete btn btn-danger ml-2">X</button>
+                  </td>
+
+    `
+    tr.innerHTML = contenido;
+    tbody.append(tr);
+    
+    tr.querySelector(".delete").addEventListener("click", eliminarProductoCarrito);
+    tr.querySelector(".sumaProducto").addEventListener("change" , sumaCantidad)
+   
+  })
+  
+  totalCarrito()
+
+}
+
+
+function totalCarrito(){
+
+  let total = 0;
+  totalProductoCarrito = document.querySelector(".totalProductoCarrito")
+
+  carrito.forEach(cardProducto => {
+
+    const precioProductoCarrito = Number(cardProducto.precio.replace("$" , ""))
+    
+    total = total + precioProductoCarrito*cardProducto.cantidad 
+    
+  });
+
+  totalProductoCarrito.innerHTML = `${total} AR$`
+ 
+  
+  //productosLocalStorage()
+}
+
+function eliminarProductoCarrito(e){
+
+  const botonBorrar = e.target; 
+  const tr = botonBorrar.closest(".agregaProductoCarrito")
+  const nombre = tr.querySelector(".title").textContent
+  for(let i=0; i<carrito.length ; i++){
+   
+    if(carrito[i].nombre.trim() === nombre.trim()){
+
+      carrito.splice(i, 1)
+
     }
 
-    carrito.push(producto); 
-    mostrarProductosCarrito(producto);
-
-    localStorage.setItem("MiCarrito", JSON.stringify(carrito));
-   
-
+  }
+  
+  tr.remove()
+  
+  totalCarrito()
 }
 
-function mostrarProductosCarrito(producto){
 
-    let fila = document.createElement("tr"); 
+function sumaCantidad(e){
+
+  const sumaProducto = e.target; 
+  const tr = sumaProducto.parentNode.parentNode;
+  const nombre =  tr.querySelector(".title").textContent;
+
+  carrito.forEach(cardProducto => {
+
+    if (cardProducto.nombre.trim() === nombre){
+
+      sumaProducto.value < 1 ? (sumaProducto.value=1) : sumaProducto.value; 
+
+      cardProducto.cantidad = sumaProducto.value; 
+      totalCarrito()
     
-    fila.innerHTML = `<td>${producto.nombre}</td>
-                      <td>${producto.cantidad}</td>
-                      <td>${producto.precio}</td>
-                      <td><button class ="btn btn-danger botonEliminar">Eliminar</button></td>
-                      `
-
- let tbody = document.getElementById("tbody"); 
-
-  tbody.appendChild(fila); 
-
-  fila.querySelector(".botonEliminar").addEventListener("click" , eliminarProductoOk);
-                      
-}
-
-
-function eliminarProductoOk(e){
-
-  const eliminarProductoElegido = e.target; 
-
-  eliminarProductoElegido.closest('tr').remove();
+    }
+    
+  });
 
 }
+  
+const confirmarCompra = document.querySelector(".confirmarCompra");
+confirmarCompra.addEventListener("click" , confirmarCompraOk);
 
 function confirmarCompraOk(){
 
-tbody.innerHTML = ``
+  tbody.innerHTML = "";
+  totalCarrito() 
 
 }
 
-//Texto animado
+/*
 
-$("#desafioCoder")
-            .html("Esto es para el desafio complementario")
-                .css("color", "blue")
-                    .fadeOut(4000)
-                        .fadeIn(3000); 
+function productosLocalStorage(){
 
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 
-//Muestra y desaparece carrito de compras
-  $("#botonToggle").click(function(){
+  actualizarCarrito()
 
-    $("#carrito").fadeToggle("slow");
+}
 
-  })
+window.onload = function(){
+
+ const storage = JSON.parse(localStorage.getItem("carrito"))
+
+ if (storage){
+
+      carrito = storage; 
+      actualizarCarrito()
+
+ }
+
+}
+
+*/
+
   
-  $("#botonToggle").on("click" ,function(e){
-  
-    if(e.target.innerHTML != "Mostrar carrito"){
-  
-      e.target.innerHTML = "Mostrar carrito"; 
-  
-    }
-  
-    else{
-  
-      e.target.innerHTML = "Esconder carrito";
-  
-    }
-  })
-  
-
-//API DEL CLIMA 
-
-$("#botonClima").click(function(){
-
-  $("#apiClima").fadeToggle("slow");
-
-})
-
-$("#botonClima").on("click" ,function(e){
-  
-	if(e.target.innerHTML != "Mostrar clima"){
-
-    e.target.innerHTML = "Mostrar clima"; 
-
-  }
-
-  else{
-
-    e.target.innerHTML = "Esconder clima";
-
-  }
-})
-
-
-$.ajax({
-
-
-  url:'http://api.openweathermap.org/data/2.5/weather',
-  type:"GET",
-  data:{
-      q:'Tigre',
-      appid: '8d1c7e66144d584458f0befbc90792a2',
-      dataType:"jsonp",
-      units: 'metric'
-  },
-  success:function(data){
-
-      console.log( data);
-      let icono = data.weather[0].icon;
-      let iconoURL = "http://openweathermap.org/img/w/" + icono + ".png";
-      $("#icono").attr("src" , iconoURL);
-      let contenido = `<div>
-                          <p>${data.name}</p>                            
-                          <p>${data.weather[0].main}</p>
-                          <p>TEMP MAX: ${data.main.temp_max}</p>
-                          <p>TEMP MIN: ${data.main.temp_min}</p>
-
-                      </div>`;
-
-
-      $("#apiClima").append(contenido);
-
-
-
-  }
-
-
-})
-
-
-
-
-
-
-
-
-
-
-

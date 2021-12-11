@@ -129,7 +129,7 @@ function totalCarrito(){
   totalProductoCarrito.innerHTML = `${total} AR$`
  
   
-  //productosLocalStorage()
+//  productosLocalStorage()
 }
 
 function eliminarProductoCarrito(e){
@@ -174,14 +174,20 @@ function sumaCantidad(e){
 
 }
   
+
 const confirmarCompra = document.querySelector(".confirmarCompra");
 confirmarCompra.addEventListener("click" , confirmarCompraOk);
 
+
 function confirmarCompraOk(){
 
-  tbody.innerHTML = "";
-  totalCarrito() 
+  const limpiarCarrito = document.querySelector(".totalProductoCarrito")
+  limpiarCarrito.innerHTML = "0 AR$"
+ 
+  tbody.innerHTML = "" 
 
+  carrito = []; 
+   
 }
 
 /*
@@ -193,6 +199,7 @@ function productosLocalStorage(){
   actualizarCarrito()
 
 }
+
 
 window.onload = function(){
 

@@ -112,7 +112,7 @@ function actualizarCarrito(){
 
 }
 
-
+//Total de la suma de las compras
 function totalCarrito(){
 
   let total = 0;
@@ -128,8 +128,8 @@ function totalCarrito(){
 
   totalProductoCarrito.innerHTML = `${total} AR$`
  
-  
-//  productosLocalStorage()
+//Almaceno lista de productos localmente
+  productosLocalStorage()
 }
 
 function eliminarProductoCarrito(e){
@@ -152,7 +152,7 @@ function eliminarProductoCarrito(e){
   totalCarrito()
 }
 
-
+//Suma y resta la cantidad de los productos. Se refleja en el total($) de los productos
 function sumaCantidad(e){
 
   const sumaProducto = e.target; 
@@ -174,7 +174,7 @@ function sumaCantidad(e){
 
 }
   
-
+//Confirma y vuelve el simulador a 0
 const confirmarCompra = document.querySelector(".confirmarCompra");
 confirmarCompra.addEventListener("click" , confirmarCompraOk);
 
@@ -190,7 +190,7 @@ function confirmarCompraOk(){
    
 }
 
-/*
+//Local Storage
 
 function productosLocalStorage(){
 
@@ -214,6 +214,6 @@ window.onload = function(){
 
 }
 
-*/
+
 
   

@@ -192,27 +192,27 @@ function confirmarCompraOk(){
 
 //Local Storage
 
-function productosLocalStorage(){
+// function productosLocalStorage(){
 
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+//   localStorage.setItem("carrito", JSON.stringify(carrito));
 
-  actualizarCarrito()
+//   actualizarCarrito()
 
-}
+// }
 
 
-window.onload = function(){
+// window.onload = function(){
 
- const storage = JSON.parse(localStorage.getItem("carrito"))
+//  const storage = JSON.parse(localStorage.getItem("carrito"))
 
- if (storage){
+//  if (storage){
 
-      carrito = storage; 
-      actualizarCarrito()
+//       carrito = storage; 
+//       actualizarCarrito()
 
- }
+//  }
 
-}
+// }
 
 
 
